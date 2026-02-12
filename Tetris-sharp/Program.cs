@@ -222,7 +222,7 @@ class JogoTetris
         {
             for (int j = 0; j < colunas; j++)
             {
-                if (tabuleiro[i, j] == 1 || ControlePecaAatual(i, j))
+                if (tabuleiro[i, j] == 1 || ControlePecaAtual(i, j))
                     Console.Write("[]"); //Imprime partes da peça
                 else
                     Console.Write(" ."); //Imprime o tabuleiro
