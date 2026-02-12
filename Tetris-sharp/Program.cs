@@ -33,6 +33,8 @@ class JogoTetris
             {
                 Console.Clear();
                 Console.WriteLine("FIM DE JOGO");
+                Console.WriteLine($"Pontuação final: {pontos}");
+                ContarPontos();
                 break;
             }
 
@@ -62,6 +64,7 @@ class JogoTetris
                         else
                         {
                             ColocarPeca();
+                            VerificarLinhas();
                             caiu = true;
                         }
                         break;
@@ -129,7 +132,7 @@ class JogoTetris
         return nova;
     }
 
-    bool ControlePecaAatual(int x, int y)
+    bool ControlePecaAtual(int x, int y)
     {
         for (int i = 0; i < pecaAtual.GetLength(0); i++)
         {
@@ -185,6 +188,34 @@ class JogoTetris
         }
     }
 
+    void VerificarLinhas()
+    {
+        for (int i = linhas - 1; i >= 0; i--)
+        {
+            bool completa = true;
+            for (int j = 0; j < colunas; j++)
+            {
+                if (tabuleiro[i, j] == 0)
+                {
+                    completa = false;
+                    break;
+                }
+            }
+            if (completa)
+            {
+                for (int k = i; k > 0; k--)
+                    for (int j = 0; j < colunas; j++)
+                        tabuleiro[k, j] = tabuleiro[k - 1, j];
+
+                for (int j = 0; j < colunas; j++)
+                    tabuleiro[0, j] = 0;
+
+                pontos += 100;
+                i++;
+            }
+        }
+    }
+
     void CriarTabuleiro()
     {
         for (int i = 0; i < linhas; i++)
@@ -196,6 +227,21 @@ class JogoTetris
                 else
                     Console.Write(" ."); //Imprime o tabuleiro
             }
+        }
+    }
+    void ContarPontos()
+    {
+        try
+        {
+            StreamWriter arq = new StreamWriter("scores.txt", true, Encoding.UTF8);
+            arq.WriteLine(nomeJogador + ";" + pontos);
+            arq.Close();
+
+            Console.WriteLine("Pontuação salva com sucesso.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception: " + e.Message);
         }
     }
 }
