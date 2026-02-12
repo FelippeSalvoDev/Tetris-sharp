@@ -41,7 +41,7 @@ class JogoTetris
             while (!caiu)
             {
                 Console.Clear();
-
+                CriarTabuleiro();
                 Console.WriteLine("A = Esquerda | D = Direita | S = Descer");
 
                 var tecla = Console.ReadKey(true).Key;
@@ -144,6 +144,20 @@ class JogoTetris
                     if (px >= 0 && px < linhas && py >= 0 && py < colunas) //Garante que a peça não escape do tabuleiro
                         tabuleiro[px, py] = 1; //Coloca a peça
                 }
+            }
+        }
+    }
+
+    void CriarTabuleiro()
+    {
+        for (int i = 0; i < linhas; i++)
+        {
+            for (int j = 0; j < colunas; j++)
+            {
+                if (tabuleiro[i, j] == 1 || ControlePecaAatual(i, j))
+                    Console.Write("[]"); //Imprime partes da peça
+                else
+                    Console.Write(" ."); //Imprime o tabuleiro
             }
         }
     }
