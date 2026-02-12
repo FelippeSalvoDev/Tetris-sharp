@@ -42,7 +42,7 @@ class JogoTetris
             {
                 Console.Clear();
                 CriarTabuleiro();
-                Console.WriteLine("A = Esquerda | D = Direita | S = Descer");
+                Console.WriteLine("A = Esquerda | D = Direita | S = Descer | R = Girar horário | E = Girar anti-horário");
 
                 var tecla = Console.ReadKey(true).Key;
 
@@ -65,6 +65,16 @@ class JogoTetris
                             caiu = true;
                         }
                         break;
+                    case ConsoleKey.R:
+                        var horario = RotacionarPecaHorario(pecaAtual);
+                        if (!ColidiuPeca(horario, posicaoX, posicaoY))
+                            pecaAtual = horario; ;
+                        break;
+                    case ConsoleKey.E:
+                        var antihorario = RotacionarPecaAntihorario(pecaAtual);
+                        if (!ColidiuPeca(antihorario, posicaoX, posicaoY))
+                            pecaAtual = antihorario; ;
+                        break;
                 }
             }
         }
@@ -78,19 +88,45 @@ class JogoTetris
         switch (tipo)
         {
             case 0:
-                return new int[,]{{1,
-                                   1,
-                                   1, }};
+                return new int[,] { {1,
+                                     1,
+                                     1} };
             case 1:
-                return new int[,]{{1,0},
-                                  {1,0},
-                                  {1,1}};
+                return new int[,]  {{ 1,0 },
+                                    { 1,0 },
+                                    { 1,1 } };
             case 2:
-                return new int[,]{{1,1,1},
-                                  {0,1,0}};
+                return new int[,] { {1,1,1},
+                                    {0,1,0} };
             default:
                 return null;
         }
+    }
+
+    int[,] RotacionarPecaHorario(int[,] peca)
+    { 
+        int linhas = peca.GetLength(0);
+        int colunas = peca.GetLength(1);
+        int[,] nova = new int[linhas, colunas];
+
+        for (int i = 0; i < linhas; i++)
+            for (int j = 0; j < colunas; j++)
+                nova[j, linhas - i - 1] = peca[i, j];
+        
+        return nova;
+    }
+
+    int[,] RotacionarPecaAntihorario(int[,] peca)
+    {
+        int linha = peca.GetLength(0);
+        int coluna = peca.GetLength(1);
+        int[,] nova = new int[coluna, linha];
+
+        for (int i = 0; i < linha; i++)
+            for (int j = 0; j < coluna; j++)
+                nova[coluna - j - 1, i] = peca[i, j];
+       
+        return nova;
     }
 
     bool ControlePecaAatual(int x, int y)
@@ -108,6 +144,7 @@ class JogoTetris
                 }
             }
         }
+        return false;
     }
 
     bool ColidiuPeca(int[,] peca, int x, int y)
