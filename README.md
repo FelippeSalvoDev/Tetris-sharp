@@ -67,3 +67,17 @@ NomeJogador;Pontuação
 
 Esse projeto não utiliza bibliotecas externas nem interface gráfica.  
 A proposta foi manter tudo na lógica pura para treinar fundamentos.
+
+---
+## Preview
+<p align="center" >
+<img width="320" height="378" alt="image" src="https://github.com/user-attachments/assets/c2aac890-e61e-4e46-960e-d378c84f3ada" />  
+    &nbsp;&nbsp;
+<img width="320" height="377" alt="image" src="https://github.com/user-attachments/assets/b03c9f69-c874-4565-a47b-63ffe8cfce36" />
+  &nbsp;&nbsp;
+<img width="321" height="378" alt="image" src="https://github.com/user-attachments/assets/fa9f3923-f5a8-491f-9615-ca8d6785ed2c" />
+</p>
+
+
+
+
