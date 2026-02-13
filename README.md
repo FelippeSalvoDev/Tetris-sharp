@@ -47,7 +47,7 @@ Esse projeto foi feito principalmente por diversão e para treinar:
 Cada linha completa removida soma **100 pontos**.  
 Ao finalizar o jogo, o score é salvo em:
 
-Scores.txt 
+scores.txt 
 
 No formato:
 
