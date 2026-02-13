@@ -44,6 +44,7 @@ class JogoTetris
             {
                 Console.Clear();
                 CriarTabuleiro();
+                Console.WriteLine($"\nPontuação: {pontos}");
                 Console.WriteLine("A = Esquerda | D = Direita | S = Descer | R = Girar horário | E = Girar anti-horário");
 
                 var tecla = Console.ReadKey(true).Key;
@@ -51,15 +52,15 @@ class JogoTetris
                 switch (tecla)
                 {
                     case ConsoleKey.A:
-                        if (!ColidiuPeca(pecaAtual, posicaoX, posicaoX))
+                        if (!ColidiuPeca(pecaAtual, posicaoX, posicaoY - 1))
                             posicaoY--; //Move para esquerda
                         break;
                     case ConsoleKey.D:
-                        if (!ColidiuPeca(pecaAtual, posicaoX, posicaoX))
+                        if (!ColidiuPeca(pecaAtual, posicaoX, posicaoY + 1))
                             posicaoY++; //Move para direita
                         break;
                     case ConsoleKey.S:
-                        if (!ColidiuPeca(pecaAtual, posicaoX, posicaoX))
+                        if (!ColidiuPeca(pecaAtual, posicaoX + 1, posicaoY))
                             posicaoX++; //Move para baixo
                         else
                         {
@@ -71,12 +72,12 @@ class JogoTetris
                     case ConsoleKey.R:
                         var horario = RotacionarPecaHorario(pecaAtual);
                         if (!ColidiuPeca(horario, posicaoX, posicaoY))
-                            pecaAtual = horario; ;
+                            pecaAtual = horario;
                         break;
                     case ConsoleKey.E:
                         var antihorario = RotacionarPecaAntihorario(pecaAtual);
                         if (!ColidiuPeca(antihorario, posicaoX, posicaoY))
-                            pecaAtual = antihorario; ;
+                            pecaAtual = antihorario;
                         break;
                 }
             }
@@ -110,7 +111,7 @@ class JogoTetris
     { 
         int linhas = peca.GetLength(0);
         int colunas = peca.GetLength(1);
-        int[,] nova = new int[linhas, colunas];
+        int[,] nova = new int[colunas, linhas];
 
         for (int i = 0; i < linhas; i++)
             for (int j = 0; j < colunas; j++)
@@ -136,7 +137,7 @@ class JogoTetris
     {
         for (int i = 0; i < pecaAtual.GetLength(0); i++)
         {
-            for (int j = 0; j < pecaAtual.GetLength(0); j++)
+            for (int j = 0; j < pecaAtual.GetLength(1); j++)
             {
                 if (pecaAtual[i, j] == 1)
                 {
@@ -158,8 +159,8 @@ class JogoTetris
             {
                 if (peca[i, j] == 1)
                 {
-                    int px = x + 1;
-                    int py = y + 1;
+                    int px = x + i;
+                    int py = y + j;
 
                     if (px < 0 || px >= linhas || py < 0 || py >= colunas) //Garante que a peça não escape do tabuleiro
                         return true;
@@ -177,7 +178,7 @@ class JogoTetris
         {
             for (int j = 0; j < pecaAtual.GetLength(1); j++)
             {
-                if ((pecaAtual[i, j] == 1))
+                if (pecaAtual[i, j] == 1)
                 {
                     int px = posicaoX + i;
                     int py = posicaoY + j;
@@ -227,6 +228,7 @@ class JogoTetris
                 else
                     Console.Write(" ."); //Imprime o tabuleiro
             }
+            Console.WriteLine();
         }
     }
     void ContarPontos()
